@@ -8,10 +8,10 @@ import net.sf.oval.constraint.NotNull;
 import java.util.Date;
 
 public class User {
-    @ApiModelProperty(value = "id",required = false)
+    @ApiModelProperty(value = "id，可以不填",required = false)
     private Integer id;
 
-    @ApiModelProperty(value = "wechatId",required = true)
+    @ApiModelProperty(value = "微信账号",required = true)
     @NotNull(message = "wechatId不能为空")
     @Length(min = 1)
     private String wechatId;

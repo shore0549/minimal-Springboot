@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -79,7 +78,7 @@ public class WeChatBillsController {
     @ApiOperation(value = "保存账单到数据库并下载",notes = "保存账单到数据库并下载到本地")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(paramType = "query", name="wechatId",dataType = "string", required = true,value = "微信账号"),
-            @ApiImplicitParam(paramType = "query", name="exportKey",dataType = "string", required = true,value = "导出ke"),
+            @ApiImplicitParam(paramType = "query", name="exportKey",dataType = "string", required = true,value = "导出key"),
             @ApiImplicitParam(paramType = "query", name="userrollEncryption",dataType = "string", required = true,value = "加密key"),
             @ApiImplicitParam(paramType = "query", name="userrollPassTicket",dataType = "string", required = true,value = "凭据key"),
             @ApiImplicitParam(paramType = "query", name="balanceuserrollEncryption",dataType = "string", required = true,value = "余额查询key")
