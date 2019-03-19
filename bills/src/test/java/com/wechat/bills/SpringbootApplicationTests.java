@@ -2,6 +2,7 @@ package com.wechat.bills;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.wechat.bills.config.SystemConfig;
 import com.wechat.bills.entity.ChangeDetail;
 import com.wechat.bills.entity.User;
 import com.wechat.bills.service.ChangeDetailService;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.List;
 
@@ -27,8 +30,23 @@ public class SpringbootApplicationTests {
     @Autowired
     protected ChangeDetailService changeDetailService;
 
+    @Autowired
+    private SystemConfig systemConfig;
+
+    @Autowired
+    private ServletContext servletContext;
+
     @Test
     public void contextLoads() {
+
+        String downloadPath = systemConfig.downloadPath;
+        System.out.println(downloadPath);
+
+
+        String contextPath = servletContext.getContextPath();
+
+
+
         User user = userService.selectUserByid(1);
         System.out.println(user);
         try {

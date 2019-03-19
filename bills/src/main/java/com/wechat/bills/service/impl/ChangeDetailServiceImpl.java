@@ -42,7 +42,6 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
     @Autowired
     private ChangeDetailMapper changeDetailMapper;
 
-
     @Override
     public ChangeDetail selectUserByid(int id) {
         return changeDetailMapper.selectByPrimaryKey(id);

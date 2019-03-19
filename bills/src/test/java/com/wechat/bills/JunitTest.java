@@ -1,8 +1,10 @@
 package com.wechat.bills;
 
 
+import com.wechat.bills.config.SystemConfig;
 import com.wechat.bills.utils.HttpUtils;
 import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
@@ -45,5 +47,16 @@ public class JunitTest {
         }
     }
 
+
+    @Test
+    public void getApplicationContext(){
+
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SystemConfig.class);
+            SystemConfig config = context.getBean(SystemConfig.class);
+            config.outSource();
+
+
+
+    }
 
 }
