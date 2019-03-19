@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 
 @SpringBootApplication(scanBasePackages = {"com.wechat.bills", "com.wechat.bills"})
-@ImportResource(locations={"classpath:application-tast.xml"})
+//@ImportResource(locations={"classpath:application-tast.xml"})
 //@MapperScan("com.young.mapper")//必须加这个，不加报错，如果不加，也可以在每个mapper上添加@Mapper注释
 //@EnableScheduling
 public class BillsApplication {
