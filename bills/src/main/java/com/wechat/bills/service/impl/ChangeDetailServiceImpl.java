@@ -227,11 +227,11 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
             }
             System.out.println("主表数据写入完成>>>>>>>>");
             // 写到本地
-            File file = new File(ResourceUtils.getURL("classpath:").getPath());
-            String filePath = file.getAbsolutePath() +File.separator+ fileName;
-            FileOutputStream fosNew = new FileOutputStream(filePath);
-            workbook.write(fosNew);
-            fosNew.close();
+//            File file = new File(ResourceUtils.getURL("classpath:").getPath());
+//            String filePath = file.getAbsolutePath() +File.separator+ fileName;
+//            FileOutputStream fosNew = new FileOutputStream(filePath);
+//            workbook.write(fosNew);
+//            fosNew.close();
 
 
             // 浏览器下载
