@@ -21,4 +21,6 @@ public interface ChangeDetailMapper {
 
     //批量插入
     int insertList(List<ChangeDetail> list);
+
+    List<ChangeDetail>  selectByPage(int pageNumber,int pageSize);
 }

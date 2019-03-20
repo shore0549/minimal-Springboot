@@ -46,7 +46,7 @@
                              targetPackage="com.wechat.bills.mapper" targetProject="src/main/java/">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-        <table tableName="test" domainObjectName="Test"
+        <table tableName="change_detail" domainObjectName="ChangeDetail"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>

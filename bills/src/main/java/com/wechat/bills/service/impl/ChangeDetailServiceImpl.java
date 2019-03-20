@@ -74,18 +74,17 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
             if (js != null && "0".equals(js.getString("retcode")) && js.getIntValue("TotalNum")>0){
                 JSONArray jsonArray = js.getJSONArray("record");
                 // 1,存数据库
-                List<ChangeDetail> arr = saveToDataBase(user,jsonArray);
-
-                String fileName = DateUtil.getCurDateTimes() + ".xls";
-                // 2,导出到excel
-                Workbook wb = writeListToExcel(arr,fileName,response);
-                // 3,下载
-                //downloadExcel(response,wb,fileName);
-                return "下载成功";
+                saveToDataBase(user,jsonArray);
             }else {
-                return res;
             }
 
+            String fileName = DateUtil.getCurDateTimes() + ".xls";
+            // 2,导出到excel
+            writeListToExcel(fileName,response);
+            // 3,另外一种下载本地或者浏览器的方法
+            //downloadExcel(response,wb,fileName);
+
+            return res;
     }
 
     public void downloadExcel(HttpServletResponse response,Workbook wb,String fileName) throws IOException {
@@ -161,7 +160,9 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
         return arr;
     }
 
-    public Workbook writeListToExcel(List<ChangeDetail> arr,String fileName,HttpServletResponse response){
+    public Workbook writeListToExcel(String fileName,HttpServletResponse response){
+        // 从数据库查询数据
+        List<ChangeDetail> arr = changeDetailMapper.selectByPage(0,100);
 
         try {
             String sheetName = "change";

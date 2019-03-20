@@ -3,10 +3,12 @@ package com.wechat.bills.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ChangeDetail  {
+public class ChangeDetail {
     private Integer id;
 
     private String wechatId;
+
+    private String orderId;
 
     private BigDecimal money;
 
@@ -19,8 +21,6 @@ public class ChangeDetail  {
     private Date transactionTime;
 
     private String remark;
-
-    private String orderId;
 
     public Integer getId() {
         return id;
@@ -36,6 +36,14 @@ public class ChangeDetail  {
 
     public void setWechatId(String wechatId) {
         this.wechatId = wechatId == null ? null : wechatId.trim();
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId == null ? null : orderId.trim();
     }
 
     public BigDecimal getMoney() {
@@ -84,13 +92,5 @@ public class ChangeDetail  {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
     }
 }
