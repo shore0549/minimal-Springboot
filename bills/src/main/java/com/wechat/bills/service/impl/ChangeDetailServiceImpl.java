@@ -20,14 +20,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -229,11 +227,11 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
             }
             System.out.println("主表数据写入完成>>>>>>>>");
             // 写到本地
-//            File file = new File(ResourceUtils.getURL("classpath:").getPath());
-//            String filePath = file.getAbsolutePath() +fileName;
-//            FileOutputStream fos = new FileOutputStream(filePath);
-//            workbook.write(fos);
-//            fos.close();
+            File file = new File(ResourceUtils.getURL("classpath:").getPath());
+            String filePath = file.getAbsolutePath() +File.separator+ fileName;
+            FileOutputStream fosNew = new FileOutputStream(filePath);
+            workbook.write(fosNew);
+            fosNew.close();
 
 
             // 浏览器下载
