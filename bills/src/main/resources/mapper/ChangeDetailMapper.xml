@@ -172,6 +172,8 @@
   <select id="selectByPage"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from change_detail ORDER BY id asc LIMIT 0,100
+    from change_detail
+    where wechat_id = #{wechatId,jdbcType=VARCHAR}
+    ORDER BY id asc LIMIT 0,200
   </select>
 </mapper>

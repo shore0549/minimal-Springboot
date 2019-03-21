@@ -2,6 +2,7 @@ package com.wechat.bills.mapper;
 
 import com.wechat.bills.entity.ChangeDetail;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface ChangeDetailMapper {
     //批量插入
     int insertList(List<ChangeDetail> list);
 
-    List<ChangeDetail>  selectByPage(int pageNumber,int pageSize);
+    List<ChangeDetail>  selectByPage(@Param("wechatId") String wechatId,@Param("pageNumber")  int pageNumber,@Param("pageSize")  int pageSize);
 }

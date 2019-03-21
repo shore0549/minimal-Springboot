@@ -78,7 +78,7 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
 
             String fileName = DateUtil.getCurDateTimes() + ".xls";
             // 2,导出到excel
-            writeListToExcel(fileName,response);
+            writeListToExcel(user.getWechatId(),fileName,response);
             // 3,另外一种下载本地或者浏览器的方法
             //downloadExcel(response,wb,fileName);
 
@@ -158,9 +158,9 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
         return arr;
     }
 
-    public Workbook writeListToExcel(String fileName,HttpServletResponse response){
+    public Workbook writeListToExcel(String wechatId,String fileName,HttpServletResponse response){
         // 从数据库查询数据
-        List<ChangeDetail> arr = changeDetailMapper.selectByPage(0,100);
+        List<ChangeDetail> arr = changeDetailMapper.selectByPage(wechatId,0,100);
 
         try {
             String sheetName = "change";
