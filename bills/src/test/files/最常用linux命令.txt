@@ -23,6 +23,10 @@ tail -fn200 catalina.out  查看最后200行的日志
 查看环境变量：echo $JAVA_HOME
 
 
+没有权限执行sh start.sh
+# chmod 777 *.sh
+
+
 
 4，rm -r 递归删除文件夹     mv修改文件名
 cp -r递归复制文件夹
