@@ -29,6 +29,9 @@ tail -fn200 catalina.out  查看最后200行的日志
 启动某个服务(centos系统可以下载已经编译好的rpm包)
 service nginx start
 
+查看某个文件的路径：
+whereis nginx
+
 
 
 4，rm -r 递归删除文件夹     mv修改文件名
