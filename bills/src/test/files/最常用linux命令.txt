@@ -17,19 +17,19 @@ vi,  less ,more.
 
 
 tail -fn200 catalina.out  查看最后200行的日志
-
+所有应用（比如nginx）的日志默认路径在：/var/log  下面。
 
 
 查看环境变量：echo $JAVA_HOME
 
 
-没有权限执行sh start.sh
+3.5 没有权限执行sh start.sh
 # chmod 777 *.sh
 
-启动某个服务(centos系统可以下载已经编译好的rpm包)
+3.6启动某个服务(centos系统可以下载已经编译好的rpm包)
 service nginx start
 
-查看某个文件的路径：
+3.7查看某个文件的路径：
 whereis nginx
 
 
