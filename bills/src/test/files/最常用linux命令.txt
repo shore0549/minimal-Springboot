@@ -26,6 +26,9 @@ tail -fn200 catalina.out  查看最后200行的日志
 没有权限执行sh start.sh
 # chmod 777 *.sh
 
+启动某个服务(centos系统可以下载已经编译好的rpm包)
+service nginx start
+
 
 
 4，rm -r 递归删除文件夹     mv修改文件名
