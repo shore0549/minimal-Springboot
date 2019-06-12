@@ -138,6 +138,17 @@
             <artifactId>druid</artifactId>
             <version>1.0.18</version>
         </dependency>
+             
+            <!--oracle数据库 -->
+             <dependency>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-jdbc</artifactId>
+             </dependency>
+             <dependency>
+                  <groupId>com.oracle</groupId>
+                  <artifactId>ojdbc6</artifactId>
+                      <version>11.2.0.3/version>
+             </dependency>
     </dependencies>
 
     <build>
@@ -171,6 +182,15 @@
                     </dependency>
                 </dependencies>
 
+            </plugin>
+                 
+               <!--跳过单元测试 -->  
+            <plugin>
+                   <groupId>org.apache.maven.plugins</groupId>
+                   <artifactId>maven-surefire-plugin</artifactId>
+                     <configuration>
+                              <skip>true</skip>
+                     </configuration>
             </plugin>
         </plugins>
     </build>
