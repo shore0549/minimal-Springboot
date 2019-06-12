@@ -4,7 +4,10 @@ ps -ef|grep java
 
 杀掉进程kill -9 3090 
 
-2，根据pid查看端口
+2，根据pid查看端口,或者根据端口查看pid都可以用下面命令
+netstat -nltp|grep 8080或者pid
+
+也可以使用以下命令，但是没有上面的好
 netstat -apn|grep 8080或者pid
 
 
