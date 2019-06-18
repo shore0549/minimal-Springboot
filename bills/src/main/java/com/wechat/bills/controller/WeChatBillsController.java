@@ -28,7 +28,7 @@ import java.util.List;
  * @date MAR 9, 2019 10:10:55 AM
  *
  */
-
+@SuppressWarnings("all")
 @Api(description="微信账单获取相关接口")
 @RestController
 public class WeChatBillsController {
