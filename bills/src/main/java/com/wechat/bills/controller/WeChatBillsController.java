@@ -116,4 +116,9 @@ public class WeChatBillsController {
 //
 //    }
 
+    
+    
+    @PostConstruct
+    public void testInit(){
+        System.out.println("bean被初始化完后就会执行这个方法");
 }
