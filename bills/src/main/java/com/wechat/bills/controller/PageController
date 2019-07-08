@@ -1,0 +1,23 @@
+package com.wechat.bills.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class PageController {
+	
+	
+	
+	@RequestMapping("/login")
+	public String login() {
+		
+		return "redirect:"+"www.baidu.com";
+	}
+	
+	@RequestMapping("/ss")
+	public String error() {
+		
+		return "error";
+	}
+
+}
