@@ -59,4 +59,52 @@ public class JunitTest {
 
     }
 
+    
+    
+    
+     @Test
+    public  void testTopBuzz(){
+        try {
+        	
+        	
+        String url = "https://game.deshangkeji.com/Api/Index/Info";
+        String param = "{\n" + 
+        		"    \"userId\": \"61e2218932abdcf2cc903c7a3653e95b\",\n" + 
+        		"    \"gameId\": \"88\",\n" + 
+        		"    \"merchantId\": \"1234\",\n" + 
+        		"    \"sign\": \"AD24DAAC7EE3FC24170683934F538282\",\n" + 
+        		"    \"timestamp\": \"1562553169405\"\n" + 
+        		"}";
+        //String response =  HttpUtils.executePost(url, param);
+        
+    
+       
+       String response = postParamJson(param,url,MediaType.APPLICATION_JSON);
+           
+          System.out.println(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
+    public String postParamJson(String param,String url,MediaType paramType){
+    	try {
+    		RestTemplate tempplate = new RestTemplate();
+    		HttpHeaders headers = new HttpHeaders();
+    		
+    		headers.setContentType(paramType);
+    		HttpEntity<String> httpEntity = new HttpEntity<String>(param,headers);
+    		tempplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+    		
+    		
+    		ResponseEntity<String> postEntity = tempplate.postForEntity(url, httpEntity, String.class);
+    		
+    		return postEntity.getBody();
+    	}catch(Exception e){
+    		 System.out.println(e);
+    		 return "";
+    	}
+    }
 }
