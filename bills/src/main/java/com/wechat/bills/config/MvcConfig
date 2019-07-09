@@ -18,6 +18,18 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan("")
 @PropertySource(value= {"classpath:application.properties"})
 public class MvcConfig extends WebMvcConfigurationSupport {
+
+
+
+	//跨域
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**")
+		.allowedOrigins("*")
+		.allowedMethods("POST","GET","PUT","OPTIONS","DELETE")
+		.maxAge(3600)
+		.allowCredentials(true);
+	}
 	
 	//配置视图解析器
 	@Bean
