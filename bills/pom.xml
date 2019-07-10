@@ -134,10 +134,10 @@
             <artifactId>h2</artifactId>
         </dependency>
         <!-- Druid数据库连接池组件 -->
-        <dependency>
+        <<dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.18</version>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
         </dependency>
              
             <!--oracle数据库 -->
