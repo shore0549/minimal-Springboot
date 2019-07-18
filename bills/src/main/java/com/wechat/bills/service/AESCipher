@@ -19,6 +19,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import org.apache.commons.lang3.StringUtils;
+import com.wechat.bills.utils.MD5Util;
 
 public class AESCipher {
 	
@@ -214,11 +215,14 @@ public class AESCipher {
     public static void main(String[] args) {
     	
     	String str = "{\"name\":\"dawsen\",\"age\":\"30\"}";
-        String key =  "root";
+    	
+        String key =  "123456";
+        key = MD5Util.getMD5(key);
+        
        
         try {
         	String cipher = aesEncrypt(str,key);
-        	System.out.print("加密后"+cipher);
+        	System.out.println("加密后"+cipher);
         	
         	String decrypt = aesDecrypt(cipher,key);
         	System.out.print("解密后"+decrypt);
