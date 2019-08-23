@@ -1,0 +1,161 @@
+package com.wechat.bills.controller;
+
+import com.alibaba.fastjson.JSONObject;
+import com.wechat.bills.entity.User;
+import com.wechat.bills.service.ChangeDetailService;
+import com.wechat.bills.service.UserService;
+import com.wechat.bills.utils.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import net.sf.oval.ConstraintViolation;
+import net.sf.oval.Validator;
+
+import org.apache.commons.io.IOUtils;
+import org.joda.time.chrono.BuddhistChronology;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Base64;
+import java.util.List;
+
+/**
+ *  背景：本代码实现需要安装 fastlane和spaceship插件
+ 
+1：初始化
+	->fastlane spaceship
+	->苹果账号
+	->密码
+	->手机双重验证码，截取到字段‘Please enter the 6 digit code:’说明需要此参数
+	初始化结束，进入spaceship环境。
+
+	2：创建证书
+	->csr, pkey = Spaceship::Portal.certificate.create_certificate_signing_request
+	->Spaceship::Portal.certificate.production.create!(csr: csr)
+
+	3：创建ID
+	->app = Spaceship::Portal.app.create!(bundle_id: "com.*", name: "NAMEMD5")
+
+	4：创建配置文件
+	cert = Spaceship::Portal.certificate.production.all.first
+	profile = Spaceship::Portal.provisioning_profile.ad_hoc.create!(bundle_id: "com.*",certificate: cert,name: "NAMEMD5")
+	filtered_profiles = Spaceship::Portal.provisioning_profile.ad_hoc.find_by_bundle_id(bundle_id: "com.*")
+	first_profile = filtered_profiles.last
+	File.write("/Users/Terence/desktop/NAMEMD5.mobileprovision", first_profile.download)
+                                     
+ *
+ */
+
+public class AppleController3 {
+	private Logger logger = LoggerFactory.getLogger(AppleController3.class);
+
+	public static void main(String[] ars) {
+
+		RunProcess1();  
+	
+	}
+
+	public static void RunProcess1(){	
+		String MD5_16BIT = "88888888FFFFFFFF";
+		String bundle_id = "com.*";
+//		String profilesDir  = "~/Library/MobileDevice/Provisioning Profiles/";
+		String profilesDir  = "/Users/Terence/desktop/";
+		
+    	Process pr;
+		try {
+			
+			pr = Runtime.getRuntime().exec("/usr/local/bin/fastlane spaceship");
+			final int bufferSize = 2048;
+			final char[] buffer = new char[bufferSize];
+			int findProfile_flag = 0;
+			
+			InputStreamReader in = new InputStreamReader(pr.getInputStream(), "UTF-8");
+			BufferedReader br = new BufferedReader(in);
+			for (; ; ) {
+			    int rsz = br.read(buffer,0,bufferSize);
+			    if (rsz < 0) {
+			    	 System.err.println("跳出循环");
+			    	 break;
+			    }
+			    StringBuilder sb= new StringBuilder();
+			    sb.append(buffer, 0, rsz);
+			    System.out.println(sb.toString());
+			    
+			    // 输入苹果账号
+			    if(sb.toString().contains("Username")){
+			    	inputCMD("inputUsername","amnzue@163.com\n",sb.toString(),pr,"Username");
+			    }
+			    
+			    
+			    // 创建证书
+			     if(sb.toString().contains("Welcome to the spaceship playground")){
+					//创建证书，建议使用独立接口
+				    inputCMD("createCertificates_step1","csr, pkey = Spaceship::Portal.certificate.create_certificate_signing_request\n",sb.toString(),pr,"");
+				    inputCMD("createCertificates_step2","Spaceship::Portal.certificate.production.create!(csr: csr)\n",sb.toString(),pr,"");
+			     	// 刚刚创建还不能下载重新查询就可以下载证书了
+			     }
+
+			    
+			    // 创建 appID， 注意16bit的md5是一个变量
+			    inputCMD("findAppID","app = Spaceship::Portal.app.find(\""+bundle_id+"\")\n",sb.toString(),pr,"[0G"); 
+			    inputCMD("createAppID","app = Spaceship::Portal.app.create!(bundle_id: \""+bundle_id+"\", name: \""+MD5_16BIT+"\")\n",sb.toString(),pr,"=> nil");
+
+			    
+			    
+			    // ID创建完成，创建配置文，并下载
+			    if(sb.toString().contains("Spaceship::Portal::App")&&  findProfile_flag ==0  ) {
+			    	findProfile_flag = 1;
+			    	profilesDir = profilesDir + MD5_16BIT+".mobileprovision";
+			    	String cmd = "cert = Spaceship::Portal.certificate.production.all.first\n";
+			    	String cmd1 = "profile = Spaceship::Portal.provisioning_profile.ad_hoc.create!(bundle_id: \""+bundle_id+"\",certificate: cert,name: \""+MD5_16BIT+"\")\n";		
+			    	String cmd2 = "filtered_profiles = Spaceship::Portal.provisioning_profile.ad_hoc.find_by_bundle_id(bundle_id: \""+bundle_id+"\")\n";
+			    	String cmd3 = "first_profile = filtered_profiles.last\n";
+			    			
+			    	String cmd4 = "File.write(\""+profilesDir+"\", first_profile.download)\n";
+			    	inputCMD("download",cmd+cmd1+cmd2+cmd3+cmd4,sb.toString(),pr,"");
+			    		
+			    }
+			    
+			    
+			    if(sb.toString().contains("=> 9514")) {
+			    	System.err.println("下载证书成功，请去桌面查看");
+			    }
+			   
+			}
+		
+			System.err.println("会话结束");
+	       	
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// cmd
+	public static void inputCMD(String cmdType, String cmd, String inputStr, Process pr, String keywordFilter) {
+		if (inputStr.contains(keywordFilter)) {
+			OutputStream out = pr.getOutputStream();
+			try {
+				// IOUtils.write(cmd, pr.getOutPutStream());
+				byte[] byteArray = cmd.getBytes();
+				out.write(byteArray);
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+}
